@@ -373,7 +373,7 @@ h1, h2, h3 { font-weight: 300; }
 
 /* Punkt nach den Kachelwoertern: Texte-Wort passt sich der Kachelbreite an, Profil-Name klein */
 @media (max-width: 860px) { .tile--texte .wort { font-size: 48px !important; } }
-.tile--profil .tile__lead { font-size: 17px; }
+.tile--profil .tile__lead { font-size: clamp(19px, 1.45vw, 22px); }
 
 .brand__name, .brand__claim, .nav a.lbl { font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: .04em; line-height: 15px; }
 .brand__name, .brand__claim { color: var(--tinte); }
@@ -409,3 +409,4 @@ h1, h2, h3 { font-weight: 300; }
 .tile--werkstatt .tile__lead { font-size: clamp(26px, 2.3vw, 34px); }
 .tile--mentoring .tile__lead, .tile--texte .tile__lead { font-size: clamp(22px, 1.8vw, 26px); }
 @media (min-width: 861px) { .wort--xl { font-size: clamp(64px, calc((50vw - 130px) / 4.8), 140px); } }
+@media (min-width: 861px) and (max-width: 1300px) { .tile--profil .tile__lead { font-size: 15px; } }
