@@ -6,7 +6,6 @@
 /* ---------- Schriften (lokal gehostet – keine Verbindung zu Google, DSGVO) ---------- */
 @font-face { font-family: "Cormorant Garamond"; src: url("../fonts/CormorantGaramond.woff") format("woff"); font-weight: 300 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Cormorant Garamond"; src: url("../fonts/CormorantGaramond-Italic.woff") format("woff"); font-weight: 300 700; font-style: italic; font-display: swap; }
-@font-face { font-family: "EB Garamond"; src: url("../fonts/EBGaramond.woff") format("woff"); font-weight: 400 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Archivo"; src: url("../fonts/Archivo.woff") format("woff"); font-weight: 100 900; font-style: normal; font-display: swap; }
 
 /* ---------- Marken-Tokens ---------- */
@@ -23,9 +22,22 @@
   --linie: rgba(26, 26, 23, .18);
   --linie-hell: rgba(237, 232, 220, .28);
 
-  --serif-display: "Cormorant Garamond", "Times New Roman", serif;
-  --serif-text: "EB Garamond", Georgia, serif;
-  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  /* Schriftsystem: zwei Familien. Serife für die redaktionelle Ebene (Logo, Titel), Grotesk für die funktionale Ebene (Text, Navigation, Beschriftung). */
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --fw-regular: 400;        /* Fließtext, Titel */
+  --fw-medium: 500;         /* Logo, Beschriftungen, Buttons */
+  --text-size: 17px;        /* Fließtext */
+  --text-leading: 1.6;      /* Zeilenabstand Fließtext */
+  --label-size: 12px;       /* Navigation, Indizes, Metadaten */
+  --label-track: .16em;     /* Laufweite kleine Versalien */
+  --display-leading: 1;     /* Zeilenabstand Titel */
+  --display-track: -.01em;  /* Laufweite große Titel */
+  --logo-track: .22em;      /* Laufweite Logo */
+  /* bisherige Namen zeigen auf das neue System, damit alle Komponenten unverändert bleiben */
+  --serif-display: var(--font-serif);
+  --serif-text: var(--font-sans);
+  --sans: var(--font-sans);
 
   --rand: 16px;            /* Seitenrand Startseite */
   --fuge: 16px;            /* Abstand zwischen Kacheln */
@@ -39,14 +51,15 @@ body {
   margin: 0;
   background: var(--papier);
   color: var(--tinte);
-  font-family: var(--serif-text);
-  font-size: 18px;
-  line-height: 1.55;
+  font-family: var(--font-sans);
+  font-size: var(--text-size);
+  font-weight: var(--fw-regular);
+  line-height: var(--text-leading);
   -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
-h1, h2, h3 { font-family: var(--serif-display); font-weight: 400; margin: 0; line-height: 1; }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: var(--fw-regular); margin: 0; line-height: var(--display-leading); }
 p { margin: 0; }
 :focus-visible { outline: 2px solid var(--gruen); outline-offset: 3px; }
 .on-green :focus-visible, .on-green:focus-visible { outline-color: var(--hell); }
@@ -58,7 +71,7 @@ p { margin: 0; }
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: .2em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   line-height: 1.3;
 }
@@ -95,7 +108,7 @@ a:hover .arr, a:focus-visible .arr { transform: translateX(10px); }
   display: inline-flex; align-items: center; gap: 16px;
   background: var(--gruen); color: var(--hell);
   padding: 15px 22px; min-height: 44px;
-  font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
   transition: background .3s ease;
 }
 .btn:hover { background: #0B4A30; }
@@ -143,9 +156,9 @@ a:hover .arr, a:focus-visible .arr { transform: translateX(10px); }
 }
 .fill--hell { color: var(--hell); -webkit-text-fill-color: var(--hell); }
 .fill--dunkel { color: var(--tinte); -webkit-text-fill-color: var(--tinte); }
-.fill--beton { background-image: url("../img/beton.jpg"); background-position: 20% 50%; }
-.fill--saeulen { background-image: linear-gradient(rgba(26,26,23,.42), rgba(26,26,23,.42)), url("../img/saeulen.jpg"); background-position: 60% 50%; }
-.fill--holz { background-image: url("../img/schreibtisch.jpg"); background-position: 50% 30%; }
+.fill--beton { background-image: url("../img/hover-werkraum.jpg"); background-position: 50% 40%; }
+.fill--saeulen { background-image: url("../img/hover-gespraech.jpg"); background-position: 50% 50%; }
+.fill--holz { background-image: url("../img/hover-randnotiz.jpg"); background-position: 50% 50%; }
 a:hover .fill, a:focus-visible .fill { -webkit-text-fill-color: transparent; }
 @media (hover: none) { a:hover .fill { -webkit-text-fill-color: inherit; } }
 
@@ -215,7 +228,7 @@ a.tile:hover img.cover { transform: scale(1.04); }
 .profil-hero__text { grid-column: span 7; background: var(--gruen); color: var(--hell); padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
 .stationen { list-style: none; margin: 0; padding: 0; }
 .stationen li { display: grid; grid-template-columns: 2fr 10fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--linie); }
-.stationen h3 { font-size: 28px; line-height: 1.15; }
+.stationen h3 { font-size: 32px; line-height: 1.15; }
 .stationen p { color: var(--text-2); margin-top: 4px; }
 .haltung { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
 
@@ -232,6 +245,8 @@ a.tile:hover img.cover { transform: scale(1.04); }
 .recht h2 { font-size: 30px; margin: 44px 0 12px; }
 .recht p, .recht li { color: var(--text-2); }
 .recht p + p { margin-top: 12px; }
+.recht ul { list-style: disc; padding-left: 22px; margin-top: 8px; }
+.recht li + li { margin-top: 6px; }
 .platzhalter { background: #F1E7C9; padding: 0 4px; }
 .hinweis { border-left: 2px solid var(--gruen); padding: 14px 20px; background: var(--stein); margin: 24px 0; font-size: 16px; }
 
@@ -261,14 +276,14 @@ a.tile:hover img.cover { transform: scale(1.04); }
   .brand__name { display: none; }
 }
 @media (max-width: 860px) {
-  body { font-size: 17px; }
+  :root { --text-size: 16px; }
   .site-header { height: 64px; padding: 0 16px; }
   .nav { display: none; }
   .nav.is-open { display: flex; position: fixed; inset: 64px 0 0 0; z-index: 50; background: var(--gruen); color: var(--hell); flex-direction: column; align-items: flex-start; gap: 0; padding: 24px 16px; }
   .nav.is-open a { font-size: 15px; padding: 18px 0; width: 100%; border-bottom: 1px solid var(--linie-hell); }
   .nav.is-open .btn { display: none; }
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: none; border: 0; color: var(--tinte); cursor: pointer; }
-  .home-grid, .page-hero, .profil-hero { grid-template-columns: 1fr; grid-template-rows: none; min-height: 0; }
+  .home-grid, .page-hero, .profil-hero { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; min-height: 0; }
   .home-grid > *, .page-hero > *, .profil-hero > * { grid-column: auto !important; grid-row: auto !important; }
   .tile--werkstatt { min-height: 460px; padding: 28px 24px; }
   .tile--bild, .tile--profil { min-height: 380px; }
@@ -292,3 +307,105 @@ a.tile:hover img.cover { transform: scale(1.04); }
   *, *::before, *::after { transition: none !important; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Variante B: weniger Abstand */
+:root { --fw-regular: 300; --text-track: -.012em; --label-track: .08em; }
+body { letter-spacing: var(--text-track); }
+.brand__mark { letter-spacing: .12em; }
+.wort--xl { letter-spacing: -.05em; }
+.wort--l { letter-spacing: -.03em; }
+.page-hero__title { letter-spacing: -.04em; }
+.lbl, .btn, .btn-primary, .nav a, .nav__link { letter-spacing: .08em; }
+
+/* keine Kursive */
+.brand__name, .wort--it, .strip__claim, .schritt__nr { font-style: normal; }
+
+/* Variante C: eine Grotesk, Referenz Chipperfield/Pawson */
+:root { --font-serif: var(--font-sans); --serif-display: var(--font-sans); --fw-regular: 300; --fw-medium: 400; --label-track: .02em; }
+body { font-weight: 300; letter-spacing: -.005em; }
+.lbl, .lbl--s, .btn { text-transform: none; letter-spacing: .02em; font-size: 14px; font-weight: 400; }
+.lbl--s { font-size: 13px; }
+.brand__mark { font-weight: 400; letter-spacing: .16em; font-size: 22px; }
+.brand__name { font-size: 15px; font-weight: 300; }
+.wort, .page-hero__title { font-weight: 300; line-height: .95; }
+.wort--xl { letter-spacing: -.045em; }
+.wort--l { letter-spacing: -.035em; }
+.tile__lead { font-size: 22px; line-height: 1.3; font-weight: 300; color: var(--text-2); }
+.strip__claim { font-size: 17px; font-weight: 300; }
+.strip__step { font-size: 17px; }
+.schritt__nr { font-size: 17px; font-weight: 300; }
+h1, h2, h3 { font-weight: 300; }
+
+/* Einheitliche Skala: Label 14, Text 17, Einleitung 22 */
+.lbl, .lbl--s, .btn, .brand__name, .brand__claim, .textlink { font-size: 14px; }
+.brand__mark { font-size: 18px; }
+.brand__name { font-weight: 400; }
+.tile--mentoring .wort, .tile--profil .wort, .tile--texte .wort { font-size: clamp(48px, 4.7vw, 68px) !important; letter-spacing: -.035em; }
+.tile--profil [style*="58px"] { font-size: clamp(48px, 4.7vw, 68px) !important; font-weight: 300; letter-spacing: -.035em; line-height: .95 !important; }
+.tile--profil [style*="58px"] { font-size: clamp(48px, 4.7vw, 68px) !important; font-weight: 300; letter-spacing: -.035em; line-height: .95 !important; }
+.brand__mark { font-family: "Cormorant Garamond", "Times New Roman", serif; font-size: 26px; font-weight: 500; letter-spacing: .22em; }
+/* Kopfzeile: alle Elemente auf einer Linie */
+.brand { align-items: center; position: relative; top: -.6px; }
+.brand__name, .brand__claim { line-height: 15px; }
+.brand__mark { line-height: 15px; display: inline-flex; align-items: center; height: 15px; }
+.brand__name, .brand__claim { letter-spacing: .02em; }
+.brand__name, .brand__claim { font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: .02em; line-height: 15px; color: var(--text-2); font-style: normal; text-transform: none; opacity: 1; }
+
+/* Kachelserie: gleicher Fuß bei Werkstatt, Mentoring, Texte */
+.tile__foot { padding-top: 20px; margin-top: 20px; }
+.tile__lead { flex: 1 1 auto; min-width: 0; margin: 0; }
+.tile__go { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+
+/* Mentoring-Kachel (Das Gespräch) nimmt die Fläche der entfernten Bildkachel ein */
+.tile--mentoring { grid-column: span 6; }
+
+/* Werkraum ist breiter als Werkstatt: Wortgroesse an die Kachelbreite gekoppelt */
+.wort--xl { font-size: clamp(64px, calc((50vw - 130px) / 4.2), 166px); }
+.tile--texte .wort { white-space: normal; }
+@media (max-width: 860px) { .wort--xl { font-size: clamp(56px, 18vw, 120px); } }
+@media (min-width: 861px) and (max-width: 1300px) { .tile--texte .wort { font-size: 4.2vw !important; } }
+
+/* Ablauf: gleiche Schriftgroesse wie die Schritte, damit der Streifen als Folge lesbar ist */
+.strip__label { font-size: 17px; font-weight: 400; color: var(--tinte); }
+.strip__claim, .strip__label, .strip__step, .strip__step .lbl { font-size: 17px; font-weight: 300; letter-spacing: 0; line-height: 1.3; }
+.strip__label { color: var(--tinte); }
+.strip__links .lbl { font-size: 14px; }
+
+/* Punkt nach den Kachelwoertern: Texte-Wort passt sich der Kachelbreite an, Profil-Name klein */
+@media (max-width: 860px) { .tile--texte .wort { font-size: 48px !important; } }
+.tile--profil .tile__lead { font-size: 17px; }
+
+.brand__name, .brand__claim, .nav a.lbl { font-family: var(--font-sans); font-size: 14px; font-weight: 400; letter-spacing: .04em; line-height: 15px; }
+.brand__name, .brand__claim { color: var(--tinte); }
+.nav { gap: 28px; }
+@media (min-width: 861px) and (max-width: 1360px) { .brand__claim { display: none; } }
+
+/* Unterseiten: gleiche Unterueberschriften, Preise und Einleitungen */
+.paket h3 { font-size: 32px; }
+.paket__preis { font-size: 32px; }
+.section__intro { font-size: 22px; }
+
+/* Fußstreifen mobil: ruhiges 2-Spalten-Raster, Name und Mail ungebrochen */
+@media (max-width: 860px) {
+  .stempel { display: grid; grid-template-columns: 1fr 1fr; }
+  .stempel > div { border-right: 0; border-bottom: 1px solid rgba(26,26,23,.25); padding: 14px 18px; min-width: 0; }
+  .stempel > div:nth-child(1) { order: 1; border-right: 1px solid rgba(26,26,23,.25); }
+  .stempel > div:nth-child(3) { order: 2; }
+  .stempel > div:nth-child(2) { order: 3; grid-column: 1 / -1; }
+  .stempel > div:nth-child(4) { order: 4; border-right: 1px solid rgba(26,26,23,.25); overflow-wrap: anywhere; }
+  .stempel > div:nth-child(5) { order: 5; }
+  .stempel > div:last-child { order: 6; grid-column: 1 / -1; border-bottom: 0; }
+}
+
+/* Rechtstexte mobil: lange Überschriftswörter dürfen umbrechen */
+@media (max-width: 600px) {
+  .recht h2 { font-size: 32px; overflow-wrap: break-word; hyphens: auto; }
+}
+
+/* Lange E-Mail-Adresse mobil: Ueberschrift darf umbrechen und wird kleiner */
+@media (max-width:600px){ h3 a[href^="mailto:"] { font-size: clamp(17px, 5.2vw, 30px); overflow-wrap: anywhere; } }
+
+/* Kacheln Startseite: Unterschrift naeher an die Hauptschrift */
+.tile--werkstatt .tile__lead { font-size: clamp(26px, 2.3vw, 34px); }
+.tile--mentoring .tile__lead, .tile--texte .tile__lead { font-size: clamp(22px, 1.8vw, 26px); }
+@media (min-width: 861px) { .wort--xl { font-size: clamp(64px, calc((50vw - 130px) / 4.8), 140px); } }
